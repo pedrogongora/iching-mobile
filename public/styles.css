@@ -1,0 +1,465 @@
+:root {
+  --light-foreground: #222;
+  --light-background: #eee;
+  --dark-foreground: #eee;
+  --dark-background: #222;
+  --font: 'Cantarell', sans-serif;
+  --hexagram-width: 10rem;
+  --hexagram-height: 7rem;
+  --coin-width: 1.8rem;
+}
+
+@font-face {
+  font-family: 'Cantarell';
+  src: url('./Cantarell-Regular.ttf') format('truetype'),
+    url('./Cantarell-Bold.ttf') format('truetype'),
+    url('./Cantarell-BoldItalic.ttf') format('truetype'),
+    url('./Cantarell-Italic.ttf') format('truetype');
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+html, body {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  font-family: var(--font);
+  font-size: 100%;
+}
+
+.app-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.app-container.light {
+  color: var(--light-foreground);
+  background-color: var(--light-background);
+}
+
+.app-container.dark {
+  color: var(--dark-foreground);
+  background-color: var(--dark-background);
+}
+
+/* ************************************************************************
+                                  INICIO
+/* ************************************************************************ */
+
+.start-button.visible {
+  display: block;
+}
+
+.start-button.hidden {
+  display: none;
+}
+
+.start-button {
+  position: absolute;
+  top: 66%;
+  left: 50%;
+  width: 70%;
+  padding: .6rem 1.5rem;
+  border: none;
+  font-family: var(--font);
+  font-size: 1rem;
+  border-width: 2pt;
+  border-style: solid;
+  transform: translate(-50%, -50%);
+  transition: top .4s ease-in-out;
+}
+
+@media (min-aspect-ratio: 1/1) {
+  .start-button {
+    top: 70%;
+  }
+}
+
+.start-button.start {
+  top: 50%;
+}
+
+.start-button.light {
+  color: var(--light-foreground);
+  background-color: var(--light-background);
+  border-color: var(--light-foreground);
+  
+}
+
+.start-button.light:active {
+  color: var(--light-background);
+  background-color: var(--light-foreground);
+  border-color: var(--light-foreground);
+  
+}
+
+.start-button.dark {
+  color: var(--dark-foreground);
+  background-color: var(--dark-background);
+  border-color: var(--dark-foreground);
+}
+
+.start-button.dark:active {
+  color: var(--dark-background);
+  background-color: var(--dark-foreground);
+  border-color: var(--dark-foreground);
+}
+
+.start-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 rgba(0,0,0,0.1);
+}
+
+/* ************************************************************************
+                                  HEXAGRAM
+/* ************************************************************************ */
+
+.hexagram {
+  display: inline-flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  width: var(--hexagram-width);
+  height: var(--hexagram-height);
+  max-width: var(--hexagram-max-width);
+}
+
+.hexagram .yin,
+.hexagram .yang,
+.hexagram > div {
+  width: 100%;
+  height: 10%;
+}
+
+.hexagram > div::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.hexagram .yin.mutant,
+.hexagram .yang.mutant {
+  opacity: 0.4;
+}
+
+.hexagram.light .yin > div,
+.hexagram.light .yang > div {
+  background-color: var(--light-foreground);
+}
+
+.hexagram.dark .yin > div,
+.hexagram.dark .yang > div {
+  background-color: var(--dark-foreground);
+}
+
+.hexagram .yin > div {
+  width: 45%;
+  height: 100%;
+}
+
+.hexagram .yin > div:first-child {
+  float: left;
+}
+
+.hexagram .yin > div:last-child {
+  float: right;
+}
+
+.hexagram .yang > div {
+  width: 100%;
+  height: 100%;
+}
+
+.after-start-enter {
+  opacity: 0.01;
+}
+
+.after-start-enter.after-start-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+/* ************************************************************************
+                               COIN SHUFFLE
+/* ************************************************************************ */
+
+.coinshuffle-container {
+  transition: all .5s ease;
+}
+
+.coinshuffle-container .hexagram {
+  position: absolute;
+  top: 29%;
+  left: calc(50% - (var(--hexagram-width) / 2));
+  transform: translateY(-50%);
+}
+
+@media (min-aspect-ratio: 1/1) {
+  .coinshuffle-container .hexagram {
+    top: 50%;
+    left: initial;
+    right: 15%;
+    transform: translateY(-100%);
+  }
+}
+
+.coin {
+  position: absolute;
+  top: 50%;
+  width: var(--coin-width);
+  height: var(--coin-width);
+  transform: translateY(-50%);
+  transition: width .05s ease;
+}
+
+.coin0 {
+  left: calc(50% - (var(--hexagram-width) / 2));
+}
+
+.coin1 {
+  left: calc(50% - (var(--coin-width) / 2));
+}
+
+.coin2 {
+  left: calc(50% + (var(--hexagram-width) / 2) - var(--coin-width));
+}
+
+@media (min-aspect-ratio: 1/1) {
+  .coin {
+    transform: translateY(-100%);
+  }
+  
+  .coin0 {
+    left: 15%;
+  }
+
+  .coin1 {
+    left: 25%;
+  }
+
+  .coin2 {
+    left: 35%;
+  }
+}
+
+.coin > circle {
+  stroke-width: .5pt;
+  stroke: #888;
+}
+
+.coin > circle.yin {
+  fill: black;
+}
+
+.coin > circle.yang {
+  fill: white;
+}
+
+.coin.flip {
+  width: 0;
+}
+
+/* ************************************************************************
+                                   RESULTS
+/* ************************************************************************ */
+
+.result {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 2rem 3rem;
+  box-sizing: border-box;
+  overflow: scroll;
+}
+
+.result .hexagram {
+  position: relative;
+  top: .6rem;
+  left: calc(50% - (var(--hexagram-width) / 2));
+  padding: .6rem 0 .4rem 0;
+  margin-bottom: 1.3rem;
+}
+
+.result h3 {
+  padding: .4rem .4rem 1rem .4rem;
+  font-size: 1.3rem;
+  line-height: 120%;
+}
+
+.result pre {
+  padding: .4rem;
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 112%;
+  white-space: pre-wrap;
+}
+
+/* ************************************************************************
+                              BACK BUTTON
+/* ************************************************************************ */
+
+.back-button {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  width: 1.3rem;
+}
+
+.back-button.light {
+  stroke: var(--light-foreground);
+  fill: var(--light-foreground);
+}
+
+.back-button.dark {
+  stroke: var(--dark-foreground);
+  fill: var(--dark-foreground);
+}
+
+/* ************************************************************************
+                                   MENU
+/* ************************************************************************ */
+
+.menu-button {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  width: 1.3rem;
+  height: 1.3rem;
+  background-color: rgba(0,0,0,0.001);
+  z-index: 100;
+}
+
+.menu-button:hover {
+  cursor: pointer;
+}
+
+.menu-button svg {
+  width: 100%;
+  height: 100%;
+}
+
+.menu-button.light {
+  stroke: var(--light-foreground);
+  fill: var(--light-foreground);
+}
+
+.menu-button.dark {
+  stroke: var(--dark-foreground);
+  fill: var(--dark-foreground);
+}
+
+.menu {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  width: 1.3rem;
+  height: 1.3rem;
+  z-index: -1;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.menu.visible {
+  top: 0;
+  right: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  padding: 0.25rem;
+  box-sizing: border-box;
+  background-color: rgba(0,0,0,0.1);
+  opacity: 1;
+}
+
+.menu * {
+  opacity: inherit;
+}
+
+.menu.light .menu-content {
+  background-color: var(--light-background);
+}
+
+.menu.dark .menu-content {
+  background-color: var(--dark-background);
+}
+
+.menu-content {
+  width: 100%;
+  height: 100%;
+}
+
+.menu-content > ul {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.menu .menu-content > ul > li > button {
+  padding: .6rem 1.5rem;
+  border-width: 2pt;
+  border-style: solid;
+}
+
+.menu .menu-content > ul > li > button:focus {
+  outline: none;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.001);
+}
+
+.menu.light .menu-content > ul > li > button {
+  color: var(--light-foreground);
+  background-color: var(--light-background);
+  border-color: var(--light-foreground);
+}
+
+.menu.light .menu-content > ul > li > button:active {
+  color: var(--light-background);
+  background-color: var(--light-foreground);
+}
+
+.menu.dark .menu-content > ul > li > button {
+  color: var(--dark-foreground);
+  background-color: var(--dark-background);
+  border-color: var(--dark-foreground);
+}
+
+.menu.dark .menu-content > ul > li > button:active {
+  color: var(--dark-background);
+  background-color: var(--dark-foreground);
+}
+
+/* ************************************************************************
+                                THEME SWITCH
+/* ************************************************************************ */
+
+.darkmode-switch {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: 1.3rem;
+}
+
+.darkmode-switch.light {
+  stroke: var(--light-foreground);
+  fill: var(--light-foreground);
+}
+
+.darkmode-switch.dark {
+  stroke: var(--dark-foreground);
+  fill: var(--dark-foreground);
+}
